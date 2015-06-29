@@ -32,5 +32,4 @@ func (l *ListIterator) Next() interface{} {
 	val := l.current
 	l.current = l.current.Next()
 	return val.Value
-//	return iterator.Element(val.Value)
 }

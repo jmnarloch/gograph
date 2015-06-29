@@ -4,6 +4,7 @@ import (
 	"container/list"
 	"github.com/jmnarloch/gograph/digraph"
 	"github.com/jmnarloch/gograph/graph"
+	"fmt"
 )
 
 type DFS interface {
@@ -11,7 +12,9 @@ type DFS interface {
 }
 
 func Search(g graph.Graph, source int) DFS {
-	// TODO validate the input
+	if(g == nil) {
+		panic("Parameter 'graph' can not be nil")
+	}
 
 	dfs := &dfs{graph: g, marked: make([]bool, g.Vertices())}
 	dfs.search(source)
@@ -19,10 +22,12 @@ func Search(g graph.Graph, source int) DFS {
 }
 
 func DirectedSearch(g digraph.Digraph, sources ...int) DFS {
-	// TODO validate the input
+	if(g == nil) {
+		panic("Parameter 'digraph' can not be nil")
+	}
 
 	dfs := &dfs{graph: g, marked: make([]bool, g.Vertices())}
-	for source := range sources {
+	for _, source := range sources {
 		dfs.search(source)
 	}
 	return dfs
@@ -34,12 +39,17 @@ type dfs struct {
 }
 
 func (d *dfs) Marked(vertex int) bool {
-	// TODO validate the input
+	d.checkBounds(vertex)
 
 	return d.marked[vertex]
 }
 
 func (d *dfs) search(source int) {
+	d.checkBounds(source)
+
+	if(d.marked[source]) {
+		return
+	}
 
 	stack := list.New()
 	stack.PushBack(source)
@@ -54,5 +64,12 @@ func (d *dfs) search(source int) {
 				stack.PushBack(it.Next().(int))
 			}
 		}
+	}
+}
+
+func (d *dfs) checkBounds(vertex int) {
+
+	if vertex < 0 || vertex >= d.graph.Vertices() {
+		panic(fmt.Sprintf("Vertex does exceed bounds: [%d, %d]", 0, d.graph.Vertices()))
 	}
 }

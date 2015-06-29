@@ -31,4 +31,21 @@ var _ = Describe("Digraph", func() {
 		Expect(other.(int)).To(Equal(1))
 		Expect(digraph.Adjacent(1).HasNext()).To(BeFalse())
 	})
+
+	It("Should iterate over all adjecent edges", func() {
+
+		digraph.AddEdge(0, 1)
+		digraph.AddEdge(0, 2)
+		digraph.AddEdge(0, 3)
+
+		val := 1
+		for it := digraph.Adjacent(0); it.HasNext(); {
+			Expect(it.Next()).To(Equal(val))
+			val++
+		}
+		// additionally verify that the 'reverse' path exists
+		for ind := 1; ind <= 3; ind++ {
+			Expect(digraph.Adjacent(ind).HasNext()).To(BeFalse())
+		}
+	})
 })
