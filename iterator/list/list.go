@@ -10,12 +10,10 @@ type ListIterator struct {
 }
 
 func New(list *list.List) *ListIterator {
-
-	if list == nil {
-		panic("List can not be nil")
+	return &ListIterator{
+		list:    list,
+		current: list.Front(),
 	}
-
-	return &ListIterator{list: list, current: list.Front()}
 }
 
 func (l *ListIterator) HasNext() bool {

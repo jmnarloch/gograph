@@ -3,10 +3,10 @@ package dfs_test
 import (
 	. "github.com/jmnarloch/gograph/dfs"
 
+	"github.com/jmnarloch/gograph/digraph"
+	"github.com/jmnarloch/gograph/graph"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/jmnarloch/gograph/graph"
-	"github.com/jmnarloch/gograph/digraph"
 )
 
 var _ = Describe("Depth First Search", func() {
@@ -20,8 +20,8 @@ var _ = Describe("Depth First Search", func() {
 
 		BeforeEach(func() {
 			g = graph.New(vertices)
-			for ind := 0; ind < vertices - 1; ind++ {
-				g.AddEdge(ind, ind + 1)
+			for ind := 0; ind < vertices-1; ind++ {
+				g.AddEdge(ind, ind+1)
 			}
 			dfs = Search(g, 0)
 		})
@@ -46,8 +46,8 @@ var _ = Describe("Depth First Search", func() {
 
 		BeforeEach(func() {
 			g = digraph.New(vertices)
-			for ind := 0; ind < vertices - 1; ind++ {
-				g.AddEdge(ind, ind + 1)
+			for ind := 0; ind < vertices-1; ind++ {
+				g.AddEdge(ind, ind+1)
 			}
 			dfs = DirectedSearch(g, 0)
 		})
@@ -70,7 +70,7 @@ var _ = Describe("Depth First Search", func() {
 
 				g = digraph.New(vertices)
 				for i := 1; i <= ind; i++ {
-					g.AddEdge(i - 1, i)
+					g.AddEdge(i-1, i)
 				}
 
 				dfs = DirectedSearch(g, 0)
